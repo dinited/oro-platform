@@ -1,0 +1,12 @@
+---
+version: '2.1'
+
+services:
+  spawner:
+    image: dinited/oro-platform-data:3.1
+    extends:
+      service: data
+    depends_on:
+      data: { condition: service_started }
+      database: { condition: service_healthy }
+    command: sh -c "cd /usr/local/composer/cache && tar xfzv /var/www/html/share/composer.tgz && cd /var/www/html/application && tar xfzv /var/www/html/share/application.tgz"
