@@ -1,5 +1,6 @@
 ---
 version: '2.1'
+# Built from https://github.com/oroinc/environment/blob/master/php71_nginx_mysql_full_ce.yml
 
 services:
   spawner:
@@ -9,4 +10,4 @@ services:
     depends_on:
       data: { condition: service_started }
       database: { condition: service_healthy }
-    command: sh -c "cd /usr/local/composer/cache && tar xfzv /var/www/html/share/composer.tgz && cd /var/www/html/application && tar xfzv /var/www/html/share/application.tgz"
+    command: sh -c "hello world"

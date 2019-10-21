@@ -1,5 +1,6 @@
 ---
 version: '2.1'
+# Built from https://github.com/oroinc/environment/blob/master/php71_nginx_mysql_full_ce.yml
 
 services:
   data:
