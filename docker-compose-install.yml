@@ -4,10 +4,10 @@ version: '2.1'
 
 services:
   spawner:
-    image: dinited/oro-platform-data:3.1
+    image: dinited/oro-platform-spawn:3.1
     extends:
       service: data
     depends_on:
       data: { condition: service_started }
       database: { condition: service_healthy }
-    command: sh -c "hello world"
+    command: sh -c "tail -f /dev/null"

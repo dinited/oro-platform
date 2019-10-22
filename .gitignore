@@ -9,10 +9,6 @@
 /.buildpath
 /.project
 /.idea
-/.settings
-/.buildpath
-/.project
-/.idea
 /node_modules
 /composer.phar
 behat.yml

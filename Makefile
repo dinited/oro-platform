@@ -1,6 +1,3 @@
-.ONESHELL:
-# FORMAT: perl -pi -e 's/^  */\t/' Makefile
-
 default:
 	$(MAKE) local
 
@@ -9,16 +6,12 @@ remote:
 	docker-compose up -d
 
 local:
-	export COMPOSER_CACHE_DIR=$$(pwd)
-	export ORO_APP=$$(pwd)
-	docker-sync-stack start
+	docker-sync start
+	export ORO_APP=$$(pwd); docker-compose -f docker-compose.yml -f docker-compose-dev.yml up
 
-local-install:
-	export COMPOSER_CACHE_DIR=$$(pwd)
-	export ORO_APP=$$(pwd)
-	docker-sync start --daemon
-	docker-compose -f docker-compose.yml -f docker-compose-dev.yml -f docker-compose-install.yml
-	php -d memory_limit=8192 /usr/local/bin/composer install --no-dev -vvv --profile
+install:
+	docker-sync start
+	export ORO_APP=$$(pwd); docker-compose -f docker-compose.yml -f docker-compose-dev.yml -f docker-compose-install.yml up
 
 down:
 	docker-compose down
@@ -26,6 +19,5 @@ down:
 clean :
 	docker stop $$(docker ps -a -q) 2>/dev/null || true
 	docker rm $$(docker ps -a -q) 2>/dev/null || true
-	docker image prune -af
 	docker volume prune -f
 	docker network prune -f
