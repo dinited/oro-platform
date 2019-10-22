@@ -27,4 +27,5 @@ clean :
 	docker stop $$(docker ps -a -q) 2>/dev/null || true
 	docker rm $$(docker ps -a -q) 2>/dev/null || true
 	docker image prune -af
+	docker volume prune -f
 	docker network prune -f

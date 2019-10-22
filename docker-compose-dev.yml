@@ -6,14 +6,11 @@ services:
   data:
     image: dinited/oro-platform-data:3.1
     volumes:
-      - "oro-platform-sync:/var/www/html/data:nocopy"
       - "oro-platform-application-sync:/var/www/html/application:nocopy"
       - "oro-platform-composer-cache-sync:/usr/local/composer/cache:nocopy"
       - "oro-platform-composer-auth-sync:/usr/local/composer/auth:nocopy"
 
 volumes:
-  oro-platform-sync:
-    external: true
   oro-platform-application-sync:
     external: true
   oro-platform-composer-cache-sync:
