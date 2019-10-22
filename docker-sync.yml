@@ -1,0 +1,15 @@
+version: "2"
+
+options:
+  verbose: true
+syncs:
+  oro-platform-sync:
+    src: './.data'
+    sync_excludes: ['registry']
+  oro-platform-application-sync:
+    src: './'
+    sync_excludes: ['.git', '.data', '.composer', '.idea']
+  oro-platform-composer-cache-sync:
+    src: './.composer/cache'
+  oro-platform-composer-auth-sync:
+    src: './.composer/auth'
