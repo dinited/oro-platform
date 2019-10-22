@@ -1,1 +1,2 @@
-# oro-platform
+# oro-platform starterkit
+
