@@ -17,8 +17,8 @@
             "url": "https://packagist.orocrm.com"
         },
         "asset-packagist": {
-          "type": "composer",
-          "url": "https://asset-packagist.orocrm.com"
+            "type": "composer",
+            "url": "https://asset-packagist.orocrm.com"
         }
     },
     "require": {
@@ -42,7 +42,7 @@
         "symfony/phpunit-bridge": "3.4.*",
         "friendsofphp/php-cs-fixer": "2.12.6",
         "oro/twig-inspector": "1.0.*"
-  },
+    },
     "config": {
         "component-dir": "public/bundles/components",
         "bin-dir": "bin",

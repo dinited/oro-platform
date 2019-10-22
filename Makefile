@@ -6,15 +6,13 @@ remote:
 	docker-compose up -d
 
 local:
-	docker-sync start
-	export ORO_APP=$$(pwd); docker-compose -f docker-compose.yml -f docker-compose-dev.yml up
-
-install:
-	docker-sync start
-	export ORO_APP=$$(pwd); docker-compose -f docker-compose.yml -f docker-compose-dev.yml -f docker-compose-install.yml up
+	export ORO_APP=$$(pwd); docker-sync-stack start
 
 down:
 	docker-compose down
+
+install:
+	php -d memory_limit=8192 /usr/local/bin/composer install --no-dev -vvv --profile
 
 clean :
 	docker stop $$(docker ps -a -q) 2>/dev/null || true
