@@ -1,6 +1,7 @@
 /.share
 /.docker-sync
-/.composer
+/.composer/cache/*
+/.composer/auth/*
 !/.composer/auth/.gitkeep
 !/.composer/cache/.gitkeep
 /.data
