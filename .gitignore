@@ -4,6 +4,7 @@
 /.composer/auth/*
 !/.composer/auth/.gitkeep
 !/.composer/cache/.gitkeep
+/dump.sql
 /.data
 /.settings
 /.buildpath
