@@ -1,21 +1,17 @@
 default:
-	$(MAKE) local
+	$(MAKE) stack
 
-remote:
-	export ORO_APP=$$(pwd)
-	docker-compose up -d
-
-local:
-	export ORO_APP=$$(pwd); docker-sync-stack start
+stack:
+    docker-sync start
+    docker stack deploy --orchestrator=kubernetes -c docker-compose.yml oro-platform
 
 down:
 	docker-compose down
 
 install:
+    rm -rf $$(pwd)/vendor
 	php -d memory_limit=8192 /usr/local/bin/composer install --no-dev -vvv --profile
 
 clean :
-	docker stop $$(docker ps -a -q) 2>/dev/null || true
-	docker rm $$(docker ps -a -q) 2>/dev/null || true
-	docker volume prune -f
-	docker network prune -f
+	docker-sync clean
+    docker stack rm --orchestrator=kubernetes oro-platform

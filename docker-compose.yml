@@ -1,16 +1,10 @@
----
-version: '2.1'
-# Built from https://github.com/oroinc/environment/blob/master/php71_nginx_mysql_full_ce.yml
+version: '3.3'
+
+volumes:
+  oro-platform-application-sync:
+    external: true
 
 services:
-  data:
-    image: dinited/oro-platform-data:3.1
-    volumes:
-      - "${BUILD_DIR:-.}/.composer/cache:/usr/local/composer/cache"
-      - "${BUILD_DIR:-.}/.composer/auth:/usr/local/composer/auth"
-      - "${ORO_APP}:/var/www/html/application"
-      - "${ORO_APP}/../../package:/var/www/package"
-      - "${ORO_APP}/../../documentation:/var/www/documentation"
 
   database:
     image: dinited/oro-platform-database:3.1
@@ -21,63 +15,23 @@ services:
       MYSQL_USER: oro_db_user
       MYSQL_PASSWORD: oro_db_pass
     ports:
-      - "3306"
-    expose:
-      - "3306"
-    privileged: true
-    healthcheck:
-      test: ["CMD-SHELL", "mysqladmin ping && test ! -f /var/lib/mysql_data/db_lock"]
-      interval: 30s
-      timeout: 5s
-      retries: 20
-    volumes_from:
-      - data
+      - "3306:3306"
 
   php:
     image: dinited/oro-platform-php:3.1
-    environment:
-      - BLACKFIRE_SERVER_ID
-      - BLACKFIRE_SERVER_TOKEN
-      - SYMFONY_ENV
-      - SYMFONY_DEBUG
-      - XDEBUG_ENABLED
-    cap_add:
-      - SYS_PTRACE
-    depends_on:
-      data: { condition: service_started }
-      database: { condition: service_healthy }
-    volumes_from:
-      - data
+    volumes:
+      - "oro-platform-application-sync:/var/www/html/application:nocopy"
 
   websocket:
     image: dinited/oro-platform-websocket:3.1
     ports:
       - "8080"
-    environment:
-      - ORO_VERBOSE=1
-      - BLACKFIRE_SERVER_ID
-      - BLACKFIRE_SERVER_TOKEN
-      - SYMFONY_ENV
-      - SYMFONY_DEBUG
-    depends_on:
-      - data
-      - php
-    links:
-      - database
-    volumes_from:
-      - data
+    volumes:
+      - "oro-platform-application-sync:/var/www/html/application:nocopy"
 
   webserver:
     image: dinited/oro-platform-webserver:3.1
     ports:
-      - "80"
-    environment:
-      - SYMFONY_ENV
-      - ORO_VERBOSE=1
-    links:
-      - php
-    volumes_from:
-      - data
-    depends_on:
-      - websocket
-      - php
+      - "1234:80"
+    volumes:
+        - "oro-platform-application-sync:/var/www/html/application:nocopy"

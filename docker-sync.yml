@@ -6,7 +6,3 @@ syncs:
   oro-platform-application-sync:
     src: '.'
     sync_excludes: ['.git', '.data', '.composer', '.idea', '.cd']
-  oro-platform-composer-cache-sync:
-    src: '.composer/cache'
-  oro-platform-composer-auth-sync:
-    src: '.composer/auth'
