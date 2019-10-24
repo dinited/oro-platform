@@ -1,32 +1,43 @@
----
-version: '2.1'
-# Built from https://github.com/oroinc/environment/blob/master/php71_nginx_mysql_full_ce.yml
+version: '3'
 
 services:
-  data:
-    image: dinited/oro-platform-data:3.1
-    volumes:
-      - "oro-platform-application-sync:/var/www/html/application:nocopy"
-      - "oro-platform-composer-cache-sync:/usr/local/composer/cache:nocopy"
-      - "oro-platform-composer-auth-sync:/usr/local/composer/auth:nocopy"
+  database:
+    image: dinited/oro-platform-database:3.1
+    environment:
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: oro_db
+      MYSQL_USER: oro_db_user
+      MYSQL_PASSWORD: oro_db_pass
+    ports:
+      - "3306:3306"
 
-  debug:
-    image: dinited/oro-platform-debug:3.1
-    extends:
-      service: data
-    depends_on:
-      data: { condition: service_started }
-      database: { condition: service_healthy }
-    command: sh -c "tail -f /dev/null"
+  php:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+
+  websocket:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
 
   webserver:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
     ports:
       - "8081:80"
 
+  debug:
+    image: dinited/oro-platform-debug:3.1
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 20
+         mysql -h database -u oro_db_user -poro_db_pass oro_db < /var/www/debug/dump.sql
+        tail -f /dev/null
+
 volumes:
   oro-platform-application-sync:
-    external: true
-  oro-platform-composer-cache-sync:
-    external: true
-  oro-platform-composer-auth-sync:
     external: true

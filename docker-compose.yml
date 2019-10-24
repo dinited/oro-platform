@@ -1,37 +1,15 @@
-version: '3.3'
-
-volumes:
-  oro-platform-application-sync:
-    external: true
+version: '3'
 
 services:
-
-  database:
-    image: dinited/oro-platform-database:3.1
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: oro_db
-      MYSQL_USER: oro_db_user
-      MYSQL_PASSWORD: oro_db_pass
-    ports:
-      - "3306:3306"
-
   php:
     image: dinited/oro-platform-php:3.1
-    volumes:
-      - "oro-platform-application-sync:/var/www/html/application:nocopy"
 
   websocket:
     image: dinited/oro-platform-websocket:3.1
     ports:
       - "8080"
-    volumes:
-      - "oro-platform-application-sync:/var/www/html/application:nocopy"
 
   webserver:
     image: dinited/oro-platform-webserver:3.1
     ports:
       - "1234:80"
-    volumes:
-        - "oro-platform-application-sync:/var/www/html/application:nocopy"

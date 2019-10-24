@@ -1,17 +1,17 @@
 default:
-	$(MAKE) stack
+	$(MAKE) start
 
-stack:
-    docker-sync start
-    docker stack deploy --orchestrator=kubernetes -c docker-compose.yml oro-platform
+start:
+	docker-sync-stack start
 
-down:
-	docker-compose down
+stop:
+	docker-sync-stack clean
 
 install:
-    rm -rf $$(pwd)/vendor
+	rm -rf $$(pwd)/vendor
 	php -d memory_limit=8192 /usr/local/bin/composer install --no-dev -vvv --profile
 
 clean :
 	docker-sync clean
-    docker stack rm --orchestrator=kubernetes oro-platform
+	docker stop $$(docker ps -a -q) 2>/dev/null || true
+	docker rm $$(docker ps -a -q) 2>/dev/null || true
