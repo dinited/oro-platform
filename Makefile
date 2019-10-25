@@ -8,12 +8,13 @@ stop:
 	docker-sync-stack clean
 
 reset:
-    git reset --hard
-    git clean -f -d
-	rm -rf $$(pwd)/vendor
-	git clone -b 3.1 https://github.com/oroinc/crm-application.git tmp
-	rsync -ravz tmp/ . --exclude=".git"
-	php -d memory_limit=8192 /usr/local/bin/composer install --no-dev -vvv --profile
+	git reset --hard
+	git clean -f -d
+	git clone -b 3.1 https://github.com/oroinc/crm-application.git .tmp
+	rsync -ravz .tmp/ . --exclude=".git" --exclude=".gitignore" --exclude="composer.json"
+	rm -rf .tmp/
+	php -d memory_limit=8192 /usr/local/bin/composer global require hirak/prestissimo
+	php -d memory_limit=8192 /usr/local/bin/composer install --no-interaction --no-dev -vvv --profile
 
 clean :
 	docker-sync clean
