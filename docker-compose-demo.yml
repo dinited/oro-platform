@@ -21,10 +21,10 @@ services:
     volumes:
       - oro-platform-application-sync:/var/www/html/application:nocopy
     environment:
-      - MYSQL_USER: ${MYSQL_USER}
-      - MYSQL_PASS: ${MYSQL_PASS}
-      - MYSQL_HOST: ${MYSQL_HOST}
-      - MYSQL_PORT: ${MYSQL_PORT}
+      - MYSQL_USER
+      - MYSQL_PASS
+      - MYSQL_HOST
+      - MYSQL_PORT
     command:
       - /bin/sh
       - -c
