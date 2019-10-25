@@ -3,9 +3,9 @@ parameters:
     database_driver: pdo_mysql
     database_host: orocrm_database_1
     database_port: 3306
-    database_name: oro_platform_db_3_1
-    database_user: oro_platform_db_user_3_1
-    database_password: oro_platform_db_pass_3_1
+    database_name: oro_db
+    database_user: oro_db_user
+    database_password: oro_db_pass
     database_driver_options: {  }
     mailer_transport: mail
     mailer_host: 127.0.0.1

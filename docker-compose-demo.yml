@@ -4,12 +4,6 @@ services:
 
   database:
     image: dinited/oro-platform-database:3.1
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: opv3
-      MYSQL_USER: oro
-      MYSQL_PASSWORD: oro
     ports:
       - "3307:3306"
 
@@ -45,6 +39,6 @@ services:
       - |
         sleep 20
         rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/paramters.yml"
-        mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h orocrm_database_1 -P 3306 oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
-        mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h orocrm_database_1 -P 3306 oro_platform_demo < /var/www/debug/dump.sql
+        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 -P 3306 opv3 -e "CREATE SCHEMA opv3;"
+        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 -P 3306 opv3 < /var/www/debug/dump.sql
         tail -f /dev/null
