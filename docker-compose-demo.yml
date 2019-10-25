@@ -38,7 +38,7 @@ services:
       - -c
       - |
         sleep 20
-        rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/paramters.yml"
+        rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml"
         mysql -u root -h oro-platform-demo_database_1 -e "DROP SCHEMA oro_db;"
         mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA oro_db;"
         mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 oro_db < /var/www/debug/dump.sql
