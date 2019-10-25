@@ -20,8 +20,6 @@ services:
     image: dinited/oro-platform-debug:3.1
     volumes:
       - oro-platform-application-sync:/var/www/html/application:nocopy
-    environment:
-      MYSQL_HOST: /run/secrets/secret
     env_file:
       - ./settings.env
     command:
