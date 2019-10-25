@@ -24,6 +24,9 @@ services:
       - type: bind
         source: /opt/opv3
         target: /var/www/html/application
+    depends_on:
+      - php
+      - mysql
     ports:
       - "8307:80"
 
