@@ -3,12 +3,6 @@ version: '3.2'
 services:
   database:
     image: dinited/oro-platform-database:3.1
-    environment:
-      MYSQL_ROOT_PASSWORD: ""
-      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: oro_db
-      MYSQL_USER: oro_db_user
-      MYSQL_PASSWORD: oro_db_pass
     ports:
       - "3306:3306"
 
@@ -35,7 +29,7 @@ services:
       - -c
       - |
         sleep 20
-        mysql -u oro_db_user -poro_db_pass oro_db < /var/www/debug/dump.sql
+        mysql -u oro_db_user -poro_db_pass -h oro-platform_database_1 oro_db < /var/www/debug/dump.sql
         tail -f /dev/null
 
 volumes:
