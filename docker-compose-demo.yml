@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 
 services:
 
@@ -15,22 +15,30 @@ services:
 
   php:
     volumes:
-      - /opt/opv3:/var/www/html/application
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
 
   websocket:
     volumes:
-      - /opt/opv3:/var/www/html/application
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
 
   webserver:
     volumes:
-      - /opt/opv3:/var/www/html/application
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
     ports:
       - "8307:80"
 
   debug:
     image: dinited/oro-platform-debug:3.1
     volumes:
-      - /opt/opv3:/var/www/html/application
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
     command:
       - /bin/sh
       - -c
@@ -40,6 +48,3 @@ services:
         mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h -P 3307 oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
         mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h -P 3307 oro_platform_demo < /var/www/debug/dump.sql
         tail -f /dev/null
-
-volumes:
-  oro-platform-application:
