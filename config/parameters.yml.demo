@@ -1,7 +1,7 @@
 # This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
-    database_host: orocrm_database_1
+    database_host: oro-platform-demo_database_1
     database_port: 3306
     database_name: oro_db
     database_user: oro_db_user

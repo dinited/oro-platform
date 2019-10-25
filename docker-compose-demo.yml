@@ -39,6 +39,8 @@ services:
       - |
         sleep 20
         rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/paramters.yml"
-        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 -P 3306 opv3 -e "CREATE SCHEMA opv3;"
-        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 -P 3306 opv3 < /var/www/debug/dump.sql
+        mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA opv3;"
+        mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA opv3;"
+        mysql -u root -h oro-platform-demo_database_1 -e "GRANT ALL PRIVILEGES ON opv3.* TO oro_db_user@'%';"
+        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 opv3 < /var/www/debug/dump.sql
         tail -f /dev/null
