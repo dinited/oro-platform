@@ -7,8 +7,12 @@ start:
 stop:
 	docker-sync-stack clean
 
-install:
+reset:
+    git reset --hard
+    git clean -f -d
 	rm -rf $$(pwd)/vendor
+	git clone -b 3.1 https://github.com/oroinc/crm-application.git tmp
+	rsync -ravz tmp/ . --exclude=".git"
 	php -d memory_limit=8192 /usr/local/bin/composer install --no-dev -vvv --profile
 
 clean :
