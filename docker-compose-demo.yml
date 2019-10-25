@@ -4,6 +4,8 @@ services:
 
   database:
     image: dinited/oro-platform-database:3.1
+    depends_on:
+      - debug
     ports:
       - "3307:3306"
 
