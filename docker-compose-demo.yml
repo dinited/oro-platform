@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+
+  php:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+
+  websocket:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+
+  webserver:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+    ports:
+      - "8081:80"
+
+  debug:
+    image: dinited/oro-platform-debug:3.1
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+    env_file:
+      - ./settings.env
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 20
+        mysql -u $MYSQL_USER -p$MYSQL_PASS -h $MYSQL_HOST -P $MYSQL_PORT oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS -h $MYSQL_HOST -P $MYSQL_PORT oro_platform_demo < /var/www/debug/dump.sql
+        tail -f /dev/null
+
+volumes:
+  oro-platform-application-sync:
+    external: true
