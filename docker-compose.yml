@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  php:
+    image: dinited/oro-platform-php:3.1
+
+  websocket:
+    image: dinited/oro-platform-websocket:3.1
+    ports:
+      - "8080"
+
+  webserver:
+    image: dinited/oro-platform-webserver:3.1
+    ports:
+      - "1234:80"
+
+volumes:
+  oro-platform-application:
