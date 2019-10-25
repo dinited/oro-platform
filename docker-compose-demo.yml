@@ -29,9 +29,10 @@ services:
       - -c
       - |
         sleep 20
-        mysql -u doadmin -pshow-password -h host.db.ondigitalocean.com -P port < /var/www/debug/dump.sql
+        mysql -u $MYSQL_USER -p$MYSQL_PASS -h $MYSQL_HOST -P $MYSQL_PORT oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
+        mysql -u $MYSQL_USER -p$MYSQL_PASS -h $MYSQL_HOST -P $MYSQL_PORT oro_platform_demo < /var/www/debug/dump.sql
         tail -f /dev/null
-  mysql -u doadmin -pshow-password -h db-mysql-fra1-93779-do-user-4495972-0.db.ondigitalocean.com -P 25060 < <local-sql-dump-path>
+
 volumes:
   oro-platform-application-sync:
     external: true
