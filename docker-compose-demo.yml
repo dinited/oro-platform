@@ -7,9 +7,9 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
-      MYSQL_DATABASE: oro_platform_db_3_1
-      MYSQL_USER: oro_platform_db_user_3_1
-      MYSQL_PASSWORD: oro_platform_db_pass_3_1
+      MYSQL_DATABASE: opv3
+      MYSQL_USER: oro
+      MYSQL_PASSWORD: oro
     ports:
       - "3307:3306"
 
@@ -45,6 +45,6 @@ services:
       - |
         sleep 20
         rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/paramters.yml"
-        mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h -P 3307 oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
-        mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h -P 3307 oro_platform_demo < /var/www/debug/dump.sql
+        mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h orocrm_database_1 -P 3306 oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
+        mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h orocrm_database_1 -P 3306 oro_platform_demo < /var/www/debug/dump.sql
         tail -f /dev/null
