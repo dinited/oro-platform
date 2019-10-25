@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+
+  php:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+
+  websocket:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+
+  webserver:
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+    ports:
+      - "8081:80"
+
+  debug:
+    image: dinited/oro-platform-debug:3.1
+    volumes:
+      - oro-platform-application-sync:/var/www/html/application:nocopy
+    environment:
+      MYSQL_HOST: /run/secrets/secret
+    env_file:
+      - ./settings.env
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 20
+        mysql -u doadmin -pshow-password -h host.db.ondigitalocean.com -P port < /var/www/debug/dump.sql
+        tail -f /dev/null
+  mysql -u doadmin -pshow-password -h db-mysql-fra1-93779-do-user-4495972-0.db.ondigitalocean.com -P 25060 < <local-sql-dump-path>
+volumes:
+  oro-platform-application-sync:
+    external: true
