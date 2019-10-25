@@ -1,11 +1,11 @@
 # This file is auto-generated during the composer install
 parameters:
     database_driver: pdo_mysql
-    database_host: mysql_host
-    database_port: mysql_port
-    database_name: mysql_db
-    database_user: mysql_user
-    database_password: password
+    database_host: orocrm_database_1
+    database_port: 3306
+    database_name: oro_platform_db_3_1
+    database_user: oro_platform_db_user_3_1
+    database_password: oro_platform_db_pass_3_1
     database_driver_options: {  }
     mailer_transport: mail
     mailer_host: 127.0.0.1
@@ -15,10 +15,10 @@ parameters:
     mailer_password: null
     websocket_bind_address: 0.0.0.0
     websocket_bind_port: 8080
-    websocket_frontend_host: oro-platform-demo_websocket_1
+    websocket_frontend_host: orocrm_websocket_1
     websocket_frontend_port: 8080
     websocket_frontend_path: ''
-    websocket_backend_host: oro-platform-demo_websocket_1
+    websocket_backend_host: orocrm_websocket_1
     websocket_backend_port: 8080
     websocket_backend_path: ''
     websocket_backend_transport: tcp

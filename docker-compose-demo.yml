@@ -11,7 +11,7 @@ services:
       MYSQL_USER: oro_platform_db_user_3_1
       MYSQL_PASSWORD: oro_platform_db_pass_3_1
     ports:
-      - "3306:3306"
+      - "3307:3306"
 
   php:
     volumes:
@@ -25,7 +25,7 @@ services:
     volumes:
       - oro-platform-application:/var/www/html/application
     ports:
-      - "8081:80"
+      - "8307:80"
 
   debug:
     image: dinited/oro-platform-debug:3.1
