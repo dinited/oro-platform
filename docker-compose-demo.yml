@@ -4,22 +4,22 @@ services:
 
   php:
     volumes:
-      - oro-platform-application-sync:/var/www/html/application:nocopy
+      - oro-platform-application-sync:/var/www/html/application
 
   websocket:
     volumes:
-      - oro-platform-application-sync:/var/www/html/application:nocopy
+      - oro-platform-application-sync:/var/www/html/application
 
   webserver:
     volumes:
-      - oro-platform-application-sync:/var/www/html/application:nocopy
+      - oro-platform-application-sync:/var/www/html/application
     ports:
       - "8081:80"
 
   debug:
     image: dinited/oro-platform-debug:3.1
     volumes:
-      - oro-platform-application-sync:/var/www/html/application:nocopy
+      - oro-platform-application-sync:/var/www/html/application
     environment:
       - MYSQL_USER
       - MYSQL_PASS
@@ -36,4 +36,3 @@ services:
 
 volumes:
   oro-platform-application-sync:
-    external: true
