@@ -44,7 +44,7 @@ services:
       - -c
       - |
         sleep 20
-        rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer"
+        rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/paramters.yml"
         mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h -P 3307 oro_platform_demo -e "CREATE SCHEMA oro_platform_demo;"
         mysql -u oro_platform_db_user_3_1 -poro_platform_db_pass_3_1 -h -P 3307 oro_platform_demo < /var/www/debug/dump.sql
         tail -f /dev/null
