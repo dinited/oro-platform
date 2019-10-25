@@ -8,3 +8,4 @@
 !Makefile
 !.composer/auth/.gitkeep
 !.composer/cache/.gitkeep
+!config/parameters.yml.demo
