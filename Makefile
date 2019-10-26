@@ -7,7 +7,11 @@ start:
 stop:
 	docker-sync-stack clean
 
-reset:
+install:
+	docker-sync-stack clean
+	docker cp oro_data_1:/var/www/html/spawn/dump.sql
+
+upgrade:
 	git reset --hard
 	git clean -f -d
 	git clone -b 3.1 https://github.com/oroinc/crm-application.git .tmp

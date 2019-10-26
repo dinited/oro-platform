@@ -29,6 +29,7 @@ services:
       - -c
       - |
         sleep 20
+        rsync -ravz /var/www/debug/ /var/www/html/application --exclude=".git" --exclude=".gitignore" --exclude="composer.json" --exclude=".composer"
         mysql -u oro_db_user -poro_db_pass -h oro-platform_database_1 oro_db < /var/www/debug/dump.sql
         tail -f /dev/null
 
