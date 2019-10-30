@@ -39,7 +39,7 @@ services:
       - |
         cp /var/www/html/application/public/index.php /var/www/html/application/public/index.php.prod
         sed  -i '1i <?php if($_SERVER["HTTP_HOST"]!="oro-platform-demo_webserver_1") die("sync in progress"); ?>' /var/www/html/application/public/index.php
-        rsync -ravz /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml" --exclude=".git"
+        rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml" --exclude=".git"
         sleep 20 # wait for database
         mysql -u root -h oro-platform-demo_database_1 -e "DROP SCHEMA oro_db;"
         mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA oro_db;"
