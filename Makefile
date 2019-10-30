@@ -1,5 +1,5 @@
 default:
-	export BUILD_DIR=oro-platform-application;$(MAKE) start
+	export BUILD_DIR=oro-platform-demo-v31-application; $(MAKE) start
 
 start:
 	docker-compose -f docker-compose.yml pull

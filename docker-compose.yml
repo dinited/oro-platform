@@ -7,7 +7,7 @@ services:
     depends_on:
       - debug
     ports:
-      - "3307:3306"
+      - "${MYSQLPORT:-3307}:3306"
 
   php:
     image: dinited/oro-platform-php:3.1
@@ -27,7 +27,7 @@ services:
       - php
       - database
     ports:
-      - "8307:80"
+      - "${WEBPORT:-8307}:80"
 
   debug:
     image: dinited/oro-platform-debug:3.1-installed
@@ -80,6 +80,7 @@ services:
             message_queue_transport_config: null
         EOL
         cp /var/www/html/application/public/index.php.prod /var/www/html/application/public/index.php
+        curl http://oro-platform-demo_webserver_1:80
 
 volumes:
-  oro-platform-application:
+  oro-platform-demo-v31-application:
