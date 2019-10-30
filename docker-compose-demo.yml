@@ -33,7 +33,7 @@ services:
       - "8307:80"
 
   debug:
-    image: dinited/oro-platform-debug:3.1
+    image: dinited/oro-platform-debug:3.1-empty
     volumes:
       - type: bind
         source: /opt/opv3

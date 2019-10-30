@@ -1,11 +1,14 @@
 {
-    "name": "oro/crm-application",
-    "description": "The OroCRM distribution",
-    "homepage": "https://github.com/oroinc/crm-application.git",
-    "license": "OSL-3.0",
+    "name": "oro/platform-application",
+    "description": "Oro Platform Empty Application",
+    "homepage": "https://github.com/oroinc/platform-application.git",
+    "license": "MIT",
     "autoload": {
         "psr-4": {"": "src/"},
-        "files": ["src/AppKernel.php"],
+        "classmap": [
+            "src/AppKernel.php",
+            "src/AppCache.php"
+        ],
         "exclude-from-classmap": ["**/Tests/"]
     },
     "repositories": {
@@ -14,17 +17,13 @@
             "url": "https://packagist.orocrm.com"
         },
         "asset-packagist": {
-          "type": "composer",
-          "url": "https://asset-packagist.orocrm.com"
+            "type": "composer",
+            "url": "https://asset-packagist.orocrm.com"
         }
     },
     "require": {
-        "oro/crm": "~3.1.1",
-        "oro/platform-serialised-fields": "~3.1.1",
-        "oro/crm-hangouts-call-bundle": "~3.1.1",
-        "oro/crm-magento-embedded-contact-us": "~3.1.1",
-        "oro/crm-dotmailer": "~3.1.1",
-        "oro/crm-zendesk": "~3.1.1"
+        "oro/platform": "~3.1.1",
+        "oro/platform-serialised-fields": "~3.1.1"
     },
     "require-dev": {
         "sensio/generator-bundle": "3.1.*",
@@ -43,12 +42,12 @@
         "symfony/phpunit-bridge": "3.4.*",
         "friendsofphp/php-cs-fixer": "2.12.6",
         "oro/twig-inspector": "1.0.*"
-  },
+    },
     "config": {
         "component-dir": "public/bundles/components",
         "bin-dir": "bin",
         "fxp-asset": {
-          "enabled": false
+            "enabled": false
         }
     },
     "scripts": {
@@ -91,7 +90,7 @@
     "prefer-stable": true,
     "extra": {
         "symfony": {
-          "require": "3.4.*"
+            "require": "3.4.*"
         },
         "symfony-web-dir": "public",
         "symfony-var-dir": "var",
