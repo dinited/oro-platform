@@ -47,7 +47,7 @@ services:
       - |
         sleep 20
         sed  -i '1i <?php if($_SERVER["HTTP_HOST"]!="oro-platform-demo_webserver_1") die(); ?>' /var/www/html/application/public/index.php
-        rsync -ravz /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml.demo" --exclude="public/index.php"
+        rsync -ravz /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml.demo" --exclude="public/index.php" --exclude=".git"
         mysql -u root -h oro-platform-demo_database_1 -e "DROP SCHEMA oro_db;"
         mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA oro_db;"
         mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 oro_db < /var/www/debug/dump.sql
