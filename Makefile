@@ -1,8 +1,12 @@
 default:
-	$(MAKE) start
+	export BUILD_DIR=$$(pwd)/.build;$(MAKE) start
 
 start:
-	export BUILD_DIR=$(pwd)/.build && docker-compose -f docker-compose.yml pull && docker-compose -f docker-compose.yml up -d
+	cp config/parameters.yml.demo $(BUILD_DIR)/config/parameters.yml
+	docker-compose -f docker-compose.yml pull
+	docker-compose -f docker-compose.yml up --force-recreate -d
+	until [ "$$DEBUGGER" = false ]; do DEBUGGER="$$(docker inspect -f '{{.State.Running}}' oro-platform-demo_debug_1)"; echo "sync in progress"; sleep 5; done
+	echo demo up and running
 
 stop:
 	docker-compose -f docker-compose.yml down
