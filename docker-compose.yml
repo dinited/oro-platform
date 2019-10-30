@@ -44,9 +44,6 @@ services:
         mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA oro_db;"
         mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 oro_db < /var/www/debug/dump.sql
         cp /var/www/html/application/config/parameters.yml.demo /var/www/html/application/config/parameters.yml
-        rm -rf /var/www/html/application/cache/prod/*
-        curl http://oro-platform-demo_webserver_1:80
-        cp /var/www/debug/public/index.php /var/www/html/application/public/index.php
 
 volumes:
   oro-platform-application:
