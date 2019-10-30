@@ -1,9 +1,0 @@
-version: "2"
-options:
-  verbose: true
-syncs:
-  #IMPORTANT: ensure this name is unique and does not match your other application container name
-  oro-platform-application-sync: #tip: add -sync and you keep consistent names as a convention
-    src: '.'
-    sync_excludes: ['.docker-sync', '.git', '.data', '.composer', '.idea', '.cd']
-    sync_strategy: 'native_osx'
