@@ -1,14 +1,59 @@
 version: '3.2'
 
 services:
+
+  database:
+    image: dinited/oro-platform-database:3.1
+    depends_on:
+      - debug
+    ports:
+      - "3307:3306"
+
   php:
     image: dinited/oro-platform-php:3.1
+    volumes:
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
 
   websocket:
     image: dinited/oro-platform-websocket:3.1
+    volumes:
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
 
   webserver:
     image: dinited/oro-platform-webserver:3.1
+    volumes:
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
+    depends_on:
+      - php
+      - database
+    ports:
+      - "8307:80"
+
+  debug:
+    image: dinited/oro-platform-debug:3.1-mysql
+    volumes:
+      - type: bind
+        source: /opt/opv3
+        target: /var/www/html/application
+    command:
+      - /bin/sh
+      - -c
+      - |
+        sleep 20
+        sed  -i '1i <?php if($_SERVER["HTTP_HOST"]!="oro-platform-demo_webserver_1") die(); ?>' /var/www/html/application/public/index.php
+        rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml" --exclude="public/index.php"
+        mysql -u root -h oro-platform-demo_database_1 -e "DROP SCHEMA oro_db;"
+        mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA oro_db;"
+        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 oro_db < /var/www/debug/dump.sql
+        curl http://oro-platform-demo_webserver_1:80
+        cp /var/www/debug/public/index.php /var/www/html/application/public/index.php
+        tail -f /dev/null
 
 volumes:
   oro-platform-application:
