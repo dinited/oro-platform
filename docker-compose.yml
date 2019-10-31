@@ -1,57 +1,57 @@
 version: '3.2'
 
 volumes:
-  opv31-demo:
+  application:
 
 services:
 
   database:
-    image: dinited/oro-platform-database:3.1
+    image: dinited/oro-platform-database:${OROVERSION}
     depends_on:
       - debug
     ports:
-      - "${MYSQLPORT:-3307}:3306"
+      - "${MYSQLPORT:-3306}:3306"
 
   php:
-    image: dinited/oro-platform-php:3.1
+    image: dinited/oro-platform-php:${OROVERSION}
     volumes:
-      - opv31-demo:/var/www/html/application
+      - application:/var/www/html/application
 
   websocket:
-    image: dinited/oro-platform-websocket:3.1
+    image: dinited/oro-platform-websocket:${OROVERSION}
     volumes:
-      - opv31-demo:/var/www/html/application
+      - application:/var/www/html/application
 
   webserver:
-    image: dinited/oro-platform-webserver:3.1
+    image: dinited/oro-platform-webserver:${OROVERSION}
     volumes:
-      - opv31-demo:/var/www/html/application
+      - application:/var/www/html/application
     depends_on:
       - php
       - database
     ports:
-      - "${WEBPORT:-8307}:80"
+      - "${OROWEBPORT:-8080}:80"
 
   debug:
-    image: dinited/oro-platform-debug:3.1-installed
+    image: dinited/oro-platform-debug:${OROVERSION}-installed
     volumes:
-      - opv31-demo:/var/www/html/application
+      - application:/var/www/html/application
     command:
       - /bin/sh
       - -c
       - |
         cp /var/www/html/application/public/index.php /var/www/html/application/public/index.php.prod
-        sed  -i '1i <?php if($_SERVER["HTTP_HOST"]!="oro-platform-demo_webserver_1") die("sync in progress"); ?>' /var/www/html/application/public/index.php
+        sed  -i '1i <?php if($_SERVER["HTTP_HOST"]!="${DOCKERPREFIX}_webserver_1") die("sync in progress"); ?>' /var/www/html/application/public/index.php
         rsync -ravz --delete /var/www/debug/ /var/www/html/application --exclude=".composer" --exclude="config/parameters.yml" --exclude=".git"
         sleep 20 # wait for database
-        mysql -u root -h oro-platform-demo_database_1 -e "DROP SCHEMA oro_db;"
-        mysql -u root -h oro-platform-demo_database_1 -e "CREATE SCHEMA oro_db;"
-        mysql -u oro_db_user -poro_db_pass -h oro-platform-demo_database_1 oro_db < /var/www/debug/dump.sql
+        mysql -u root -h ${DOCKERPREFIX}_database_1 -e "DROP SCHEMA oro_db;"
+        mysql -u root -h ${DOCKERPREFIX}_database_1 -e "CREATE SCHEMA oro_db;"
+        mysql -u oro_db_user -poro_db_pass -h ${DOCKERPREFIX}_database_1 oro_db < /var/www/debug/dump.sql
         cat >/var/www/html/application/config/parameters.yml <<'EOL'
         # This file is auto-generated during the composer install
         parameters:
             database_driver: pdo_mysql
-            database_host: oro-platform-demo_database_1
+            database_host: ${DOCKERPREFIX}_database_1
             database_port: 3306
             database_name: oro_db
             database_user: oro_db_user
@@ -65,10 +65,10 @@ services:
             mailer_password: null
             websocket_bind_address: 0.0.0.0
             websocket_bind_port: 8080
-            websocket_frontend_host: orocrm_websocket_1
+            websocket_frontend_host: ${DOCKERPREFIX}_websocket_1
             websocket_frontend_port: 8080
             websocket_frontend_path: ''
-            websocket_backend_host: orocrm_websocket_1
+            websocket_backend_host: ${DOCKERPREFIX}_websocket_1
             websocket_backend_port: 8080
             websocket_backend_path: ''
             websocket_backend_transport: tcp
@@ -83,5 +83,5 @@ services:
             message_queue_transport_config: null
         EOL
         cp /var/www/html/application/public/index.php.prod /var/www/html/application/public/index.php
-        curl http://oro-platform-demo_webserver_1:80
+        curl http://${DOCKERPREFIX}_webserver_1:80
 
